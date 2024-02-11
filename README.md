@@ -70,14 +70,6 @@ If you encounter any issues or have suggestions for improvements, please file an
 
 Contributions are welcome! If you'd like to improve this tool, please fork the repository and submit a pull request.
 
-## License
-
-[MIT License](LICENSE)
-
-## Disclaimer
-
-This tool is provided as-is, and it uses OpenAI's API, which might incur costs depending on your usage. Please check OpenAI's pricing and policies before extensive use.
-
 ## Acknowledgements
 
 This tool uses OpenAI for transcription and summarization capabilities and Streamlit for the web interface. Thanks to all contributors and OpenAI for making tools like this possible.
