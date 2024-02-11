@@ -2,8 +2,9 @@
 
 This tool is designed to help user researchers transcribe and summarize their interviews easily. It leverages OpenAI's Whisper and GPT API to convert audio or video interviews into text and provide a summary of the content, as well as key observations and memorable quotes. Ideal for qualitative researchers, journalists, podcasters, and anyone looking to efficiently process and analyze spoken word recordings.
 
+<p align="center">
 <img src="https://i.ibb.co/b5t5gzh/dall-e.png">
-
+<p align="center">
 
 ## Features
 
