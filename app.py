@@ -18,11 +18,14 @@ with st.form(key='form'):
     file_upload = st.file_uploader("Upload interview file (audio or video):",
                                    type=['mp3', 'mp4', 'm4a', 'avi', 'wav'])
     
-    # Dropdown menu for model selection
-    model_size = st.selectbox('Choose a model size:', ('tiny', 'base'))
+    model_size = 'tiny'
+    if "HOSTED" not in os.environ:
+        # Dropdown menu for model selection
+        model_size = st.selectbox('Choose a model size:', ('tiny', 'base',
+                                                           'small', 'medium', 'large'))
 
-    st.warning("Use the 'tiny' model when not running locally \
-                otherwise it will crash.")
+        st.warning("Use the 'tiny' model when not running locally \
+                    otherwise it will crash.")
 
     # Submit button for the form
     submit_button = st.form_submit_button(label='Submit')
