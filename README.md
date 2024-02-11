@@ -53,7 +53,7 @@ To run the tool:
 2. Run the Streamlit application:
 
 ```shell
-streamlit run app.py
+streamlit run src/app.py
 ```
 
 3. Open the displayed URL in your web browser.

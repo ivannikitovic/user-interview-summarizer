@@ -17,12 +17,13 @@ with st.form(key='form'):
     # File uploader for video/audio file
     file_upload = st.file_uploader("Upload interview file (audio or video):",
                                    type=['mp3', 'mp4', 'm4a', 'avi', 'wav'])
-    
+
     model_size = 'tiny'
     if "HOSTED" not in os.environ:
         # Dropdown menu for model selection
         model_size = st.selectbox('Choose a model size:', ('tiny', 'base',
-                                                           'small', 'medium', 'large'))
+                                                           'small', 'medium',
+                                                           'large'))
 
         st.warning("Use the 'tiny' model when not running locally \
                     otherwise it will crash.")
@@ -59,10 +60,10 @@ if submit_button:
 
         # Create a download button for the transcript
         st.download_button(label="Download Transcript",
-                        data=transcript,
-                        file_name="transcript.txt",
-                        mime="text/plain")
-        
+                           data=transcript,
+                           file_name="transcript.txt",
+                           mime="text/plain")
+
         print("done")
 
     else:
