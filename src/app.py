@@ -60,7 +60,7 @@ if submit_button:
             os.remove(transcript_output_path)
 
         with st.status("Generating insights ..."):
-            st.write("Diarizing transcript ...")
+            st.write("Diarizing transcript ... This could take a few minutes.")
             labelized = labelize_transcript(openai_token, transcript)
             print("Diarization successful.")
 
@@ -68,12 +68,12 @@ if submit_button:
             insights = summarize(openai_token, idea_summary, transcript)
             print("Extracted insights.")
 
-        result = "### Interview Transcript\n\n" + labelized + "\n\n" + \
+        result = "# Interview Transcript\n\n" + labelized + "\n\n" + \
                  insights
 
         st.download_button(label="Download Transcript and Summary",
                            data=result,
-                           file_name="interivew_result.md",
+                           file_name="interview_result.md",
                            mime="text/plain")
 
     else:

@@ -44,14 +44,13 @@ def labelize_transcript(api_key, transcript):
     assistant = client.beta.assistants.create(
         instructions=f"You will be provided a user interview transcript. \
             Assign speaker labels to the transcript \
-            (Interviewer, Interviewee). \
+            (#### Interviewer, #### Interviewee). \
             Insert a new line between speaker blocks. \
             Return just the labeled transcript, \
             without any additional text before or after. \
-            Append {DONE_MSG} at the end, alone on a new line. \
             Please fix any semantic and logical errors \
             you find within the script since it's extracted using Whisper. \
-            Please use format the output using Markdown. \
+            Append {DONE_MSG} at the end, alone on a new line. \
             If any of this is not possible or you encounter an error, \
             just write {ERR_MSG}",
         # model="gpt-4-turbo-preview",
