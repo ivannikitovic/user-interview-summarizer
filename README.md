@@ -57,7 +57,7 @@ streamlit run src/app.py
 ```
 
 3. Open the displayed URL in your web browser.
-4. Enter your OpenAI API token, provide a brief description of the interview, and upload your interview file (audio or video).
+4. Enter your OpenAI API token, provide a brief description of your idea, and upload your interview file (audio or video).
 5. Choose the model size if running locally. Use the 'base' model for balanced performance.
 6. Submit the form, and wait for the transcription and summarization to complete.
 7. Download the result directly from the web interface.

@@ -51,6 +51,7 @@ def labelize_transcript(api_key, transcript):
             Append {DONE_MSG} at the end, alone on a new line. \
             Please fix any semantic and logical errors \
             you find within the script since it's extracted using Whisper. \
+            Please use format the output using Markdown. \
             If any of this is not possible or you encounter an error, \
             just write {ERR_MSG}",
         # model="gpt-4-turbo-preview",
@@ -70,13 +71,29 @@ def labelize_transcript(api_key, transcript):
         response = send_message(client, thread, assistant, "Continue")
         labelized += response
 
-    return labelized
+    return labelized[:-20]
 
 
-if __name__ == "__main__":
-    with open("./test.txt", 'r') as file:
-        transcript = file.read()
-    result = labelize_transcript("OPEN_AI_TOKEN",
-                                 transcript)
+def summarize(api_key, idea_summary, transcript):
+    client = OpenAI(
+        api_key=api_key,
+    )
 
-    print(result)
+    instructions = f"""You are an experienced user researcher.
+You will receive a user research interview transcript.
+Please summarize it, and extract key themes and key quotes \
+that would be most useful to development of the following idea.
+Be verbose in your answer.
+
+{idea_summary}"""
+
+    assistant = client.beta.assistants.create(
+        instructions=instructions,
+        model="gpt-4-0125-preview",
+    )
+
+    thread = client.beta.threads.create()
+
+    response = send_message(client, thread, assistant, transcript)
+
+    return response

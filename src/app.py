@@ -2,7 +2,7 @@ import os
 import streamlit as st
 from media_converter import convert_to_wav
 from transcript_generator import extract_transcript
-from open_ai import labelize_transcript
+from open_ai import labelize_transcript, summarize
 
 st.title('User Interview Transcription and Summarizer')
 
@@ -12,8 +12,8 @@ with st.form(key='form'):
     openai_token = st.text_input('Enter your OpenAI API token:')
 
     # Text area for the interview description prompt
-    interview_prompt = st.text_area("Provide a brief description \
-                                    of the interview:")
+    idea_summary = st.text_area("Provide a brief description \
+                                    of your idea:")
 
     # File uploader for video/audio file
     file_upload = st.file_uploader("Upload interview file (audio or video):",
@@ -34,7 +34,7 @@ with st.form(key='form'):
 
 # Actions to take upon form submission
 if submit_button:
-    if openai_token and file_upload and interview_prompt:
+    if openai_token and file_upload and idea_summary:
         # Display the input for confirmation (For demonstration purposes)
         # You would replace this section with your processing logic
         st.success("Form submitted successfully.")
@@ -48,7 +48,7 @@ if submit_button:
             st.write("Extracting transcript ...")
             transcript_output_path = extract_transcript(wav_output_path,
                                                         model_size=model_size)
-            print("Transcript generated successfully.")
+            print("Transcript extracted successfully.")
             print("ts output path: ", transcript_output_path)
 
             os.remove(wav_output_path)
@@ -64,18 +64,17 @@ if submit_button:
             labelized = labelize_transcript(openai_token, transcript)
             print("Diarization successful.")
 
-        # Download buttons
-        st.download_button(label="Download Raw Transcript",
-                           data=transcript,
-                           file_name="raw_transcript.txt",
-                           mime="text/plain")
+            st.write("Extracting insights ...")
+            insights = summarize(openai_token, idea_summary, transcript)
+            print("Extracted insights.")
 
-        st.download_button(label="Download Labeled Transcript",
-                           data=labelized,
-                           file_name="labeled_transcript.txt",
-                           mime="text/plain")
+        result = "### Interview Transcript\n\n" + labelized + "\n\n" + \
+                 insights
 
-        print("done")
+        st.download_button(label="Download Transcript and Summary",
+                           data=result,
+                           file_name="interivew_result.md",
+                           mime="text/plain")
 
     else:
         st.error("Please fill in all the fields and upload a file.")
