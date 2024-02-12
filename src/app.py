@@ -2,6 +2,7 @@ import os
 import streamlit as st
 from media_converter import convert_to_wav
 from transcript_generator import extract_transcript
+from open_ai import labelize_transcript
 
 st.title('User Interview Transcription and Summarizer')
 
@@ -25,8 +26,8 @@ with st.form(key='form'):
                                                            'small', 'medium',
                                                            'large'))
 
-        st.warning("Use the 'tiny' model when not running locally \
-                    otherwise it will crash.")
+        # st.warning("Use the 'tiny' model when not running locally \
+        #             otherwise it will crash.")
 
     # Submit button for the form
     submit_button = st.form_submit_button(label='Submit')
@@ -38,13 +39,13 @@ if submit_button:
         # You would replace this section with your processing logic
         st.success("Form submitted successfully.")
 
-        with st.status("Generating ... This could take a few minutes."):
+        with st.status("Generating transcript ..."):
             st.write("Converting media ...")
             wav_output_path = convert_to_wav(file_upload)
             print("Media converted successfully.")
             print("wav output path: ", wav_output_path)
 
-            st.write("Generating transcript ...")
+            st.write("Extracting transcript ...")
             transcript_output_path = extract_transcript(wav_output_path,
                                                         model_size=model_size)
             print("Transcript generated successfully.")
@@ -58,10 +59,20 @@ if submit_button:
 
             os.remove(transcript_output_path)
 
-        # Create a download button for the transcript
-        st.download_button(label="Download Transcript",
+        with st.status("Generating insights ..."):
+            st.write("Diarizing transcript ...")
+            labelized = labelize_transcript(openai_token, transcript)
+            print("Diarization successful.")
+
+        # Download buttons
+        st.download_button(label="Download Raw Transcript",
                            data=transcript,
-                           file_name="transcript.txt",
+                           file_name="raw_transcript.txt",
+                           mime="text/plain")
+
+        st.download_button(label="Download Labeled Transcript",
+                           data=labelized,
+                           file_name="labeled_transcript.txt",
                            mime="text/plain")
 
         print("done")

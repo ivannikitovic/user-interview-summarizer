@@ -35,6 +35,7 @@ def send_message(client, thread, assistant, payload):
 
     return response
 
+
 def labelize_transcript(api_key, transcript):
     client = OpenAI(
         api_key=api_key,
