@@ -62,10 +62,11 @@ def labelize_transcript(api_key, transcript):
     response = send_message(client, thread, assistant, transcript)
     labelized = response
 
+    # TODO: improve output handling logic
     while labelized[-20:] not in [ERR_MSG, DONE_MSG]:
         # print(labelized[-20:])
         if labelized[-20:] == ERR_MSG:
-            return ERR_MSG
+            return ERR_MSG  # TODO: proper error handling
 
         response = send_message(client, thread, assistant, "Continue")
         labelized += response

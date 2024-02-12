@@ -35,8 +35,6 @@ with st.form(key='form'):
 # Actions to take upon form submission
 if submit_button:
     if openai_token and file_upload and idea_summary:
-        # Display the input for confirmation (For demonstration purposes)
-        # You would replace this section with your processing logic
         st.success("Form submitted successfully.")
 
         with st.status("Generating transcript ..."):
