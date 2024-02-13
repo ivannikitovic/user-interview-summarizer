@@ -43,6 +43,7 @@ def labelize_transcript(api_key, transcript):
 
     assistant = client.beta.assistants.create(
         instructions=f"You will be provided a user interview transcript. \
+            It is a back and forth conversation. \
             Assign speaker labels to the transcript \
             (#### Interviewer, #### Interviewee). \
             Insert a new line between speaker blocks. \
